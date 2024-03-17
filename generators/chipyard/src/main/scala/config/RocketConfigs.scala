@@ -100,3 +100,9 @@ class ClusteredRocketConfig extends Config(
 class FastRTLSimRocketConfig extends Config(
   new freechips.rocketchip.subsystem.WithoutTLMonitors ++
   new chipyard.RocketConfig)
+
+class MySHAConfig extends Config(
+  new sha3.WithSha3Accel ++
+  new freechips.rocketchip.subsystem.WithoutTLMonitors ++
+  new chipyard.RocketConfig
+)
