@@ -315,5 +315,6 @@ lazy val fpga_platforms = (project in file("./fpga"))
   .settings(commonSettings)
 
 lazy val myRoCC = (project in file("generators/myRoCC"))
-  .dependsOn(chipyard)
   .settings(commonSettings)
+  .settings(libraryDependencies ++= rocketLibDeps.value)
+  .dependsOn(rocketchip)

@@ -1,0 +1,134 @@
+
+     _____       _            __
+    / ___/____  (_)________ _/ /
+    \__ \/ __ \/ / ___/ __ `/ /
+   ___/ / /_/ / / /  / /_/ / /
+  /____/ .___/_/_/   \__,_/_/
+      /_/
+
+  http://www.spiral.net
+  Spiral 8.4.1
+----------------------------------------------------------
+
+PID: 34104
+
+spiral> a := IntHexString("123456789ABCDEF");
+81985529216486895
+spiral> b := IntHexString("FEDCBA0987654321");
+18364757930599072545
+spiral> m := 1152921504606846577;
+1152921504606846577
+spiral> mu := 9223372036854779000;
+9223372036854779000
+spiral> mbits := 60;
+60
+spiral> shft := 4;
+4
+spiral> ctrl := true;
+true
+spiral> _positive := i -> Cond(i<0, i+2^64, i);
+(i) -> Cond(i < 0, i + 2 ^ 64, i)
+spiral> _shl := (n, i) -> (n - Mod(n, 2^(i))) / 2^(i);
+(n, i) -> (n - Mod(n, 2 ^ i)) / 2 ^ i
+spiral> _low64 := n -> Mod(n, 2^64);
+(n) -> Mod(n, 2 ^ 64)
+spiral> _HexPrint := i -> PrintLine("0x"::ToUpperHexStr(HexInt(i)));
+(i) -> PrintLine("0x" :: ToUpperHexStr(HexInt(i)))
+spiral>
+spiral> c :=  _low64(_shl(a*2^64+b, 4));
+18441619939765146674
+spiral> d := _low64(a*b);
+2465396616120899791
+spiral> e := _low64(_shl(a*b, 64));
+81621146358218099
+spiral> f := Cond(ctrl, a+b, a);
+18446743459815559440
+spiral> g := Cond(ctrl, _positive(a-b), a);
+163971672326965966
+spiral>
+spiral> u := Mod(a, m);
+81985529216486895
+spiral> v := Mod(b, m);
+1070935361496373890
+spiral> w := Mod(u + v, m);
+1152920890712860785
+spiral> x := _positive(Mod(u - v, m));
+17457794241429664621
+spiral> z := Mod(u * v, m);
+108431875476897849
+spiral>
+spiral> _HexPrint(a);
+0x123456789ABCDEF
+spiral> _HexPrint(b);
+0xFEDCBA0987654321
+spiral> _HexPrint(m);
+0xFFFFFFFFFFFFE71
+spiral>
+spiral> _HexPrint(c);
+0xFFEDCBA098765432
+spiral> _HexPrint(d);
+0x2236D928FE5618CF
+spiral> _HexPrint(e);
+0x121FA000AD77D73
+spiral> _HexPrint(f);
+0xFFFFFF7111111110
+spiral> _HexPrint(g);
+0x2468B5E02468ACE
+spiral>
+spiral> _HexPrint(u);
+0x123456789ABCDEF
+spiral> _HexPrint(v);
+0xEDCBA0987655A82
+spiral> _HexPrint(w);
+0xFFFFF7111112871
+spiral> _HexPrint(x);
+0xF2468B5E0246736D
+spiral> _HexPrint(z);
+0x1813A375C214039
+spiral>
+spiral> #       q = DBigInt(a[i]) * DBigInt(b[i]);  // note 2x #bits
+spiral> q := u*v;
+87801202368929916109490347205171550
+spiral> _HexPrint(q);
+0x10E8EEF9C66C7DABD072C297EF995E
+spiral> #       tmp = q;
+spiral> tmp := q;
+87801202368929916109490347205171550
+spiral> #   q >>= (mbits - 2 = 58);
+spiral> q := _shl(q, mbits-2);
+304621613936746346
+spiral> _HexPrint(q);
+0x43A3BBE719B1F6A
+spiral> #   q *= DBigInt(mu);
+spiral> q := q * mu;
+2809638475805758279060818560887534000
+spiral> _HexPrint(q);
+0x21D1DDF38CD8FE9B618EE98862FB1B0
+spiral> #   q >>= (mbits + 5);
+spiral> q := _shl(q, mbits + 5);
+76155403484186612
+spiral> _HexPrint(q);
+0x10E8EEF9C66C7F4
+spiral> #   tmp -= q * DBigInt(mod);
+spiral> qm := q*m;
+87801202368929914848136967121427124
+spiral> _HexPrint(qm);
+0x10E8EEF9C66C7D9A4F388B3BCE5AB4
+spiral> tmp := tmp - qm;
+1261353380083744426
+spiral> _HexPrint(tmp);
+0x11813A375C213EAA
+spiral> #   c =  BigInt(tmp);
+spiral> cc := _low64(tmp);
+1261353380083744426
+spiral> _HexPrint(cc);
+0x11813A375C213EAA
+spiral> #   if (c >= mod) c -= mod;
+spiral> cc := Cond(cc >= m, cc - m, cc);
+108431875476897849
+spiral> _HexPrint(cc);
+0x1813A375C214039
+spiral>
+spiral> z = cc;
+true
+spiral>

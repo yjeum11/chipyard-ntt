@@ -16,54 +16,29 @@
 #define CUSTOM_2 0b1011011
 #define CUSTOM_3 0b1111011
 
-#define CUSTOMX(X, xd, xs1, xs2, rd, rs1, rs2, funct) \
-  CUSTOMX_OPCODE(X)                     |             \
-  (rd                 << (7))           |             \
-  (xs2                << (7+5))         |             \
-  (xs1                << (7+5+1))       |             \
-  (xd                 << (7+5+2))       |             \
-  (rs1                << (7+5+3))       |             \
-  (rs2                << (7+5+3+5))     |             \
-  (EXTRACT(funct, 7, 0) << (7+5+3+5+5))
+#define CUSTOMR(X, funct3, rd, rs1, rs2, funct7) \
+  CUSTOMX_OPCODE(X)                        |     \
+  (rd                    << (7))           |     \
+  (EXTRACT(funct3, 3, 0) << (7+5))         |     \
+  (rs1                   << (7+5+3))       |     \
+  (rs2                   << (7+5+3+5))     |     \
+  (EXTRACT(funct7, 7, 0) << (7+5+3+5+5))
 
 // Standard macro that passes rd, rs1, and rs2 via registers
-//#define ROCC_INSTRUCTION_DSS(X, rd, rs1, rs2, funct) \
+#define ROCC_INSTRUCTION_DSS(X, rd, rs1, rs2, funct) \
 	ROCC_INSTRUCTION_R_R_R(X, rd, rs1, rs2, funct, 10, 11, 12)
-
-#define ROCC_INSTRUCTION_DSS(X, rd, rs1, rs2, funct) { \
-  asm volatile ( ".insn r " STR(CUSTOMX_OPCODE(X)) ", 0x7, " # funct ", %[_rd], %[_rs1], %[_rs2]" \
-      : [_rd] "=r" (rd) \
-      : [_rs1] "r" (rs1), [_rs2] "r" (rs2)\
-      ); \
-}
 
 #define ROCC_INSTRUCTION_DS(X, rd, rs1, funct) \
 	ROCC_INSTRUCTION_R_R_I(X, rd, rs1, 0, funct, 10, 11)
 
-// #define ROCC_INSTRUCTION_D(X, rd, funct) \
- 	ROCC_INSTRUCTION_R_I_I(X, rd, 0, 0, funct, 10)
+#define ROCC_INSTRUCTION_D(X, rd, funct) \
+	ROCC_INSTRUCTION_R_I_I(X, rd, 0, 0, funct, 10)
 
-#define ROCC_INSTRUCTION_D(X, rd, funct) { \
-  asm volatile ( ".insn r " STR(CUSTOMX_OPCODE(X)) ", 0x4, " # funct ", %[_rd], x0, x0" \
-      : [_rd] "=r" (rd) \
-      ); \
-}
-
-//#define ROCC_INSTRUCTION_SS(X, rs1, rs2, funct) \
+#define ROCC_INSTRUCTION_SS(X, rs1, rs2, funct) \
 	ROCC_INSTRUCTION_I_R_R(X, 0, rs1, rs2, funct, 11, 12)
 
-#define ROCC_INSTRUCTION_SS(X, rs1, rs2, funct) { \
-  asm volatile ( ".insn r " STR(CUSTOMX_OPCODE(X)) ", 0x3, " # funct ", x0, %[_rs1], %[_rs2]" \
-      : : [_rs1] "r" (rs1), [_rs2] "r" (rs2) :\
-      ); \
-}
-// #define ROCC_INSTRUCTION_S(X, rs1, funct) \
- 	ROCC_INSTRUCTION_I_R_I(X, 0, rs1, 0, funct, 11)
-#define ROCC_INSTRUCTION_S(X, rs1, funct) { \
-  asm volatile ( ".insn r " STR(CUSTOMX_OPCODE(X)) ", 0x2, " # funct ", x0, %[_rs1], x0" \
-      : : [_rs1] "r" (rs1) :\
-      ); \
-}
+#define ROCC_INSTRUCTION_S(X, rs1, funct) \
+	ROCC_INSTRUCTION_I_R_I(X, 0, rs1, 0, funct, 11)
 
 #define ROCC_INSTRUCTION(X, funct) \
 	ROCC_INSTRUCTION_I_I_I(X, 0, 0, 0, funct)

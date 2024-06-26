@@ -1,0 +1,19 @@
+(a+b)(c+d)-(ac+bd) = (ac+ad+bc+bd) - (ac-bd) = ad+bc
+
+(ah*z + al) * (bh*z + bl) = (ah*bh)*z^2 + (ah*bl + al*bh)*z + (al*bl)
+(ah*z + al) * (bh*z + bl) = (ah*bh)*z^2 + ((ah+al)*(bh+bl)-((ah*bh)+(al*bl)))*z + (al*bl)
+
+(ah al) * (bh bl) = (chh chl clh cll)
+
+(uc ul) = (ah + al)			// a+b					addqc
+(vc vl) = (bh + bl)			// c+d					addqc
+(xc xh xl) = (uc ul) * (vc vl)		// (a+b)*(c+d)				mulqqc
+(yh yl) = (ah * bh) 			// a*c					mulqqq = mulq + mulhiq
+(zh zl) = (al * bl) 			// b*d					mulqqq = mulq + mulhiq
+(qc qh ql) = (yh yl) + (zh zl)		// ac+bd				addqc + adcqc
+(rc rh rl) = (xc xh xl) - (qc qh ql)	// (a+b)(c+d)-(ac+bd) = ad+bc		subqc + sbcqc + xor
+
+(clc clh cll) = (zh zl) + (rl 0)	// cl = (cll clh)			addqc 
+(wh wl) = (rc rh rh) + (0 clc)		//					cincqc + adcqc + cincq
+(chh chl) = (yl yh) + (wh wl)		// ch = (chl chh)			addqc + adcq
+

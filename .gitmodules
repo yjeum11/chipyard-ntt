@@ -153,4 +153,4 @@
 	url = https://github.com/llvm/circt.git
 [submodule "generators/myRoCC"]
 	path = generators/myRoCC
-	url = https://github.com/yjeum11/myRoCC.git
+	url = git@github.com:yjeum11/myRoCC.git

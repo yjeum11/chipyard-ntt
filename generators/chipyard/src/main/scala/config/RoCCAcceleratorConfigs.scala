@@ -62,3 +62,32 @@ class AES256ECBRocketConfig extends Config(
   new freechips.rocketchip.subsystem.WithNBigCores(1) ++
   new chipyard.config.WithSystemBusWidth(256) ++
   new chipyard.config.AbstractConfig)
+
+class myRoCCConfig extends Config(
+  new myRoCC.WithmyRoCC ++                                   
+  new freechips.rocketchip.subsystem.WithNBigCores(1) ++
+  new chipyard.config.WithSystemBusWidth(256) ++
+  new chipyard.config.AbstractConfig)
+
+class myRoCCCarryConfig extends Config(
+  new freechips.rocketchip.subsystem.WithoutTLMonitors ++
+  new myRoCCCarry.WithmyRoCCCarry ++                                   
+  new freechips.rocketchip.subsystem.WithNBigCores(1) ++
+  new chipyard.config.WithSystemBusWidth(256) ++
+  new chipyard.config.AbstractConfig)
+
+class myBoomRoCCCarryConfig extends Config(
+  new freechips.rocketchip.subsystem.WithoutTLMonitors ++
+  new myRoCCCarry.WithmyRoCCCarry ++                                   
+  new boom.common.WithBoomCommitLogPrintf ++
+  new boom.common.WithNLargeBooms(1) ++
+  new chipyard.config.WithSystemBusWidth(128) ++
+  new chipyard.config.AbstractConfig)
+
+class mySmallBoomRoCCCarryConfig extends Config(
+  new freechips.rocketchip.subsystem.WithoutTLMonitors ++
+  new myRoCCCarry.WithmyRoCCCarry ++                                   
+  new boom.common.WithBoomCommitLogPrintf ++
+  new boom.common.WithNSmallBooms(1) ++
+  new chipyard.config.WithSystemBusWidth(128) ++
+  new chipyard.config.AbstractConfig)

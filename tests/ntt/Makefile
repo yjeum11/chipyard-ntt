@@ -21,17 +21,13 @@ ARCH = rv64imafdc
 ABI = lp64d
 ARCHFLAGS = -march=$(ARCH) -mabi=$(ABI)
 
-CFLAGS = -std=gnu99 -O2 -fno-common -fno-builtin-printf -Wall 
+CFLAGS = -std=gnu99 -O3 -fno-common -fno-builtin-printf -Wall
 CFLAGS += $(ARCHFLAGS)
 LDFLAGS = -static
 
 include libgloss.mk
 
-PROGRAMS = pwm blkdev accum charcount nic-loopback big-blkdev pingd \
-           streaming-passthrough streaming-fir nvdla spiflashread spiflashwrite fft gcd \
-           hello mt-hello symmetric myRoCCTest myRoCCTestbad mod mpntt modadd \
-					 ntt128 multi-word/time_add multi-word/time_sub multi-word/time_mul
-
+PROGRAMS = ntt128
 
 .DEFAULT_GOAL := default
 

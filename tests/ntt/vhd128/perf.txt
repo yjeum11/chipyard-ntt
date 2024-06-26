@@ -1,0 +1,19 @@
+AMD 9724, AVX-512/MQX:
+8 mul/cycle/core
+
+VHD64/MQX performance, 3 op mult, 2.375 GHz (19/8)
+128 * 8 * 2.375 = 2432 mulq / ns
+19 cycles/butterfly
+128 butterfly/ns
+
+VHD64 performance, 4 op mult, 2.625 GHz (21/8))
+21 cycles/butterfly
+128 * 8 * 2.625 = 2560 mulq / ns
+128 butterfly/ns
+
+
+VHD64/MQX performance, 3 op mult, 3 op mulhi, 2.25 GHz (18/8) == base clock
+128 * 8 * 2.375 = 2304 mulq / ns
+18 cycles/butterfly
+128 butterfly/ns
+

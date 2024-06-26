@@ -21,17 +21,13 @@ ARCH = rv64imafdc
 ABI = lp64d
 ARCHFLAGS = -march=$(ARCH) -mabi=$(ABI)
 
-CFLAGS = -std=gnu99 -O2 -fno-common -fno-builtin-printf -Wall 
+CFLAGS = -std=gnu99 -O3 -fno-common -fno-builtin-printf -Wall
 CFLAGS += $(ARCHFLAGS)
-LDFLAGS = -static
+# LDFLAGS = -static
 
-include libgloss.mk
+# include libgloss.mk
 
-PROGRAMS = pwm blkdev accum charcount nic-loopback big-blkdev pingd \
-           streaming-passthrough streaming-fir nvdla spiflashread spiflashwrite fft gcd \
-           hello mt-hello symmetric myRoCCTest myRoCCTestbad mod mpntt modadd \
-					 ntt128 multi-word/time_add multi-word/time_sub multi-word/time_mul
-
+PROGRAMS = ntt128 ntt8bigint
 
 .DEFAULT_GOAL := default
 
@@ -46,15 +42,23 @@ spiflash.img: spiflash.py
 %.o: %.S
 	$(GCC) $(CFLAGS) -D__ASSEMBLY__=1 -c $< -o $@
 
-%.o: %.c mmio.h spiflash.h
+#%.o: %.c #mmio.h spiflash.h
+#	$(GCC) $(CFLAGS) -c $< -o $@
+
+%.riscv: %.c
 	$(GCC) $(CFLAGS) -c $< -o $@
 
-%.riscv: %.o $(libgloss)
-	$(GCC) $(LDFLAGS) $< -o $@
+#%.riscv: %.o #$(libgloss)
+#	$(GCC) $(LDFLAGS) $< -o $@
 
 %.dump: %.riscv
-	$(OBJDUMP) -D $< > $@
+	$(OBJDUMP) --disassemble=ntt8bigint $< > $@
 
+%.s: %.c
+	$(GCC) $(CFLAGS) -S -c $< -o $@
+
+%.csv: %.s
+	./analysis.py $<
 
 #################################
 # Recipes
@@ -62,11 +66,17 @@ spiflash.img: spiflash.py
 
 .PHONY: clean
 clean:
-	rm -f *.riscv *.o *.dump
+	rm -f *.riscv *.o *.dump *.s *.csv
 	$(if $(libgloss),rm -rf $(libgloss_builddir)/)
 
 .PHONY: default
-default: $(addsuffix .riscv, $(PROGRAMS)) spiflash.img
+default: $(addsuffix .riscv, $(PROGRAMS)) #spiflash.img
 
 .PHONY: dumps
 dumps: $(addsuffix .dump, $(PROGRAMS))
+
+.PHONY: assemble
+assemble: $(addsuffix .s, $(PROGRAMS))
+
+.PHONY: analyze
+analyze: $(addsuffix .csv, $(PROGRAMS))

@@ -1,0 +1,28 @@
+addmod128: 	24 ops
+addsub:	6
+cmp:	10
+logic:	6
+cmov:	2
+
+submod128:	13 ops
+addsub:	6
+cmp:	4
+logic:	1
+cmov:	2
+
+mul64:		16 ops
+mul:	4
+addsub:	3
+cmp:	3
+logic:	3	
+shift:	3
+
+mul128:		 109 ops
+mul64:	3 = 48 ops
+addsub:	20 + 3 * 6	= 38
+neg:	2 + 3 * 0 	= 2
+cmp:	20 + 3 * 3	= 29
+logic:	10 + 3 * 3	= 19
+shift:	0 + 3 * 3	= 9
+mul:	0 + 3 * 4	= 12
+50 + 4

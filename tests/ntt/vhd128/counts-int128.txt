@@ -1,0 +1,42 @@
+addmod128: 	24 ops
+addsub:	6
+cmp:	10
+logic:	6
+cmov:	2
+
+submod128:	13 ops
+addsub:	6
+cmp:	4
+logic:	1
+cmov:	2
+
+mul128:		 10 ops
+mulqqq:	4
+addsub:	6
+
+mullo128:	4 ops
+mulqqq:		1
+mul:		2
+addsub:		1
+
+mulhi128:	10 ops
+mulqqq:		3
+mulhi:		1
+addsub:		6
+
+mulmod128:	46 ops
+mul128:		1 = 1* 10 = 10
+mullo128:	2 = 2 * 4 = 8
+mulhi128:	1 = 1 * 10 = 10
+shift:		8
+logic:		2
+addsub:		6
+cmov:		2
+
+bfly128:	24 	+ 13	+ 46	= 83
+addsub:		6	+ 6	+ 6	= 18
+mul:		0	+ 0	+ 28	= 28
+shift:		0	+ 0 	+ 8	= 8
+logic:		6	+ 1	+ 2	= 9
+cmov:		2	+ 2	+ 2	= 6
+cmp:		10	+ 4	+ 0	= 14

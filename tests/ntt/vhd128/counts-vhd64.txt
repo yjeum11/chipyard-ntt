@@ -1,0 +1,73 @@
+// need to do that in Excel to do it right
+
+addmod128: 	7 ops max, 4.5ops avg
+ops:	2
+cops:	5
+
+submod128:	6 ops max, 4 ops avg
+ops:	2
+cop:	4
+
+mul128K:	27 ops (mullo/hi), 24 ops (mulqqq), 20 ops avg mulqqq
+mulqqq:	3
+addsub:	11
+cop:	8
+flag:	2
+24
+
+mul128:		12 ops (mullo/hi), 10 ops (mulqqq), 9 ops avg mulqqq
+mulqqq:	4
+addsub:	4
+cop:	2
+10
+
+mullo128:	6 ops (mullo/mulhi), 5 ops (mulqqq) 
+mulqqq:	1		
+mulq:	2
+addsub:	2
+5
+
+mulhi128:	12 ops (mullo/hi), 9 ops (mulqqq), 8 ops avg mulqqq
+mulqqq:	3		
+mulhiq:	1
+addsub:	2
+carry:	1
+cop:	2
+9
+
+mulhi128K:	12 ops (mullo/hi), 9 ops (mulqqq), 8 ops avg mulqqq
+mulqqq:	3		
+addsub:	9
+carry:	1
+cop:	6
+9
+
+
+mulmod128:	38 ops
+mulqqq:		1 (1, 2)
+mul128:		1 = 10 (3, 6)
+mullo128:	1 = 5 (3, 4)
+mulhi128:	1 = 9 (4, 7)
+shift:		5
+addsub:		6
+flag:		2		
+
+bfly128KK:
+addsub:		2 + 2 + (11 + 2 + 2 + 13) = 32
+cops:		5 + 4 + 14 = 23 
+mul:		0 + 0 + 19 = (6 + 4 + 2 + 6) = 18
+
+bfly128K:
+addsub:		2 + 2 + (11 + 2 + 2 + 6) = 25
+cops:		5 + 4 + 10 = 19 
+mul:		0 + 0 + 19 = (6 + 4 + 7 + 2) = 19
+
+bfly128:
+addsub:		2 + 2 + (4 + 2 + 2 + 6) = 18
+cops:		5 + 4 + 4 = 13
+mul:		0 + 0 + (8 + 4 + 7 + 2) = 21
+flag:		0 + 0 + 3
+shift:		0 + 0 + 5
+
+
+
