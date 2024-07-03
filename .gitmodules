@@ -154,3 +154,6 @@
 [submodule "generators/myRoCC"]
 	path = generators/myRoCC
 	url = git@github.com:yjeum11/myRoCC.git
+[submodule "tests/multi-word"]
+	path = tests/multi-word
+	url = https://github.com/Naifeng/multi-word.git
